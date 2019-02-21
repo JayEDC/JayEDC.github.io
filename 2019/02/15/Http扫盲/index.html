@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="HTTP 协议知识学习 说明：这篇文章主要是对 HTTP 的基础知识进行总结，做 web 开发对网络这方面还是有必要去学习了解的。  一、HTTP基本概念说明HTTP 全称 （Hyper Text Transfer Protocal）超文本传输协议，是用于万维网（WWW:World Wide Web）服务器传输超文本到电脑本地浏览器的一种传送协议。 HTTP 是基于 TCP/IP通信协议进行数据传">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Http知识扫盲">
+<meta property="og:url" content="https://jayedc.github.io/2019/02/15/Http扫盲/index.html">
+<meta property="og:site_name" content="辛弄潮">
+<meta property="og:description" content="HTTP 协议知识学习 说明：这篇文章主要是对 HTTP 的基础知识进行总结，做 web 开发对网络这方面还是有必要去学习了解的。  一、HTTP基本概念说明HTTP 全称 （Hyper Text Transfer Protocal）超文本传输协议，是用于万维网（WWW:World Wide Web）服务器传输超文本到电脑本地浏览器的一种传送协议。 HTTP 是基于 TCP/IP通信协议进行数据传">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://jayedc.github.io/2019/02/15/Http扫盲/request.png">
+<meta property="og:image" content="https://jayedc.github.io/Users/xnc/Documents/blog/hexoBlog/source/_posts/Http扫盲/post.png">
+<meta property="og:image" content="https://jayedc.github.io/2019/02/15/Http扫盲/response.png">
+<meta property="og:image" content="https://jayedc.github.io/2019/02/15/Http扫盲/responseInfo.png">
+<meta property="og:updated_time" content="2019-02-21T01:26:34.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Http知识扫盲">
+<meta name="twitter:description" content="HTTP 协议知识学习 说明：这篇文章主要是对 HTTP 的基础知识进行总结，做 web 开发对网络这方面还是有必要去学习了解的。  一、HTTP基本概念说明HTTP 全称 （Hyper Text Transfer Protocal）超文本传输协议，是用于万维网（WWW:World Wide Web）服务器传输超文本到电脑本地浏览器的一种传送协议。 HTTP 是基于 TCP/IP通信协议进行数据传">
+<meta name="twitter:image" content="https://jayedc.github.io/2019/02/15/Http扫盲/request.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://jayedc.github.io/2019/02/15/Http扫盲/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Http知识扫盲 | 辛弄潮</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">辛弄潮</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">XNC</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jayedc.github.io/2019/02/15/Http扫盲/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Blog">
+      <meta itemprop="description" content="Just be yourself">
+      <meta itemprop="image" content="/images/edc.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="辛弄潮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Http知识扫盲
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-15 18:12:43" itemprop="dateCreated datePublished" datetime="2019-02-15T18:12:43+08:00">2019-02-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-21 09:26:34" itemprop="dateModified" datetime="2019-02-21T09:26:34+08:00">2019-02-21</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/网络/" itemprop="url" rel="index"><span itemprop="name">网络</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/02/15/Http扫盲/" class="leancloud_visitors" data-flag-title="Http知识扫盲">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">7.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">6 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="HTTP-协议知识学习"><a href="#HTTP-协议知识学习" class="headerlink" title="HTTP 协议知识学习"></a>HTTP 协议知识学习</h3><blockquote>
+<p>说明：这篇文章主要是对 HTTP 的基础知识进行总结，做 web 开发对网络这方面还是有必要去学习了解的。</p>
+</blockquote>
+<h4 id="一、HTTP基本概念说明"><a href="#一、HTTP基本概念说明" class="headerlink" title="一、HTTP基本概念说明"></a>一、HTTP基本概念说明</h4><p>HTTP 全称 （<strong>Hyper Text Transfer Protocal</strong>）超文本传输协议，是用于万维网（WWW:World Wide Web）服务器传输超文本到电脑本地浏览器的一种传送协议。</p>
+<p>HTTP 是基于 TCP/IP通信协议进行数据传输的。HTML 文件、图片文件等都可通过 HTTP 协议传输。</p>
+<p>HTTP 是应用层协议，因为其简洁、快速的方式，已经成为internet中应用最为广泛的一种网络传输协议，所有 WWW 开头的文件都必须遵守这个标准。</p>
+<h4 id="二、HTTP-发展历史"><a href="#二、HTTP-发展历史" class="headerlink" title="二、HTTP 发展历史"></a>二、HTTP 发展历史</h4><p>1960年美国人<a href="https://baike.baidu.com/item/Ted%20Nelson" target="_blank" rel="noopener">Ted Nelson</a>构思了一种通过<a href="https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%9C%BA/140338" target="_blank" rel="noopener">计算机</a>处理文本信息的方法，并称之为超文本（hypertext）,这成为了HTTP超文本传输协议标准架构的发展根基。Ted Nelson组织协调万维网协会（World Wide Web Consortium）和<a href="https://baike.baidu.com/item/%E4%BA%92%E8%81%94%E7%BD%91%E5%B7%A5%E7%A8%8B%E5%B7%A5%E4%BD%9C%E5%B0%8F%E7%BB%84/6992977" target="_blank" rel="noopener">互联网工程工作小组</a>（Internet Engineering Task Force ）共同合作研究，最终发布了一系列的<a href="https://baike.baidu.com/item/RFC" target="_blank" rel="noopener">RFC</a>，其中著名的RFC 26166定义了今天普遍使用的一个版本——HTTP 1.1。</p>
+<h4 id="三、HTTP-工作原理"><a href="#三、HTTP-工作原理" class="headerlink" title="三、HTTP 工作原理"></a>三、HTTP 工作原理</h4><p>HTTP协议工作与 客户端——服务端架构上，浏览器作为 HTTP 客户端通过 URL向HTTP服务器也就是 Web服务器发送请求。Web服务器根据收到的请求，向客户端浏览器发送响应消息。</p>
+<p>Web服务器：目前最主流的三个Web服务器是Apache Nginx IIS。还有我们都比较熟悉的：Tomcat、Jboss、WebLogic等。</p>
+<h4 id="四、HTTP的三大特性"><a href="#四、HTTP的三大特性" class="headerlink" title="四、HTTP的三大特性"></a>四、HTTP的三大特性</h4><ul>
+<li><p>HTTP是无连接的：无连接的意思就是限制每次连接只处理一个请求，服务器处理完请求、并受到客户端应答之后，即断开连接。采用这种方式可以节省传输的时间。</p>
+</li>
+<li><p>HTTP是媒体独立的：意思是，只要客户端和服务端知道如何处理数据内容，那么任何数据类型都可以通过 HTTP来发送。客户端和服务端指定使用适合的MIME-type内容类型。一句话就是可以传输任意类型的对象。</p>
+</li>
+<li><p>HTTP 是无状态的：HTTP 协议是无状态协议，无状态指协议对于事务处理是没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，必须重传，这样可能导致每次传输的数据量增大。另一方面，在服务器不需要先前信息时，它的答应就较快。</p>
+<p><strong>思考？HTTP无状态这一特性会出现什么问题</strong> <strong>如何解决</strong></p>
+<p>比如说做一个购物车程序，HTTP 无状态的特性就导致不知道用户之前倒到底选了那些商品。于是两种用于保持HTTP 连接状态的技术就诞生了，想必已经猜到了，就是 Cookie 和 Session（会话）了。有了 Cookie这样的技术实现，服务器在接收来自客户端的请求时，就能通过分析存放于请求头中的 Cookie得到信息，从而进行相应的操作。具体实现如各种网页登录时，有记住我这个选项，就是通过 Cookie 技术实现的。</p>
+</li>
+</ul>
+<h4 id="五、HTTP-URL详细介绍"><a href="#五、HTTP-URL详细介绍" class="headerlink" title="五、HTTP URL详细介绍"></a>五、HTTP URL详细介绍</h4><p>HTTP 使用统一资源标识符即为（Uniform Resource Identifiers）简称 URI 来传输数据和建立连接。URL 是一种特殊类型的 URI ，包含了用于查找某个资源足够的信息。URL 全称为（UniformResourceLocator）也叫统一资源定位符，是互联网上用来标识某一处资源的地址。</p>
+<p><strong>HTTP 组成</strong>：由这条URL为例</p>
+<p><a href="https://localhost:8080/index/login.html?name=xnc&amp;ID=123#xxx" target="_blank" rel="noopener">https://localhost:8080/index/login.html?name=xnc&amp;ID=123#xxx</a></p>
+<p>从上面这条 URL 可以看出，一条完整的 URL 有以下几部分组成</p>
+<p>1、协议部分：这条 URL 用的是 https 协议。</p>
+<p>2、域名部分：该 URL 的域名为 jayedc.github.io</p>
+<p>为什么这个域名没有加 www 呢，原因是这是二级域名。github是主域名，jayedc 是主机名。同理，www也是一个主机名。</p>
+<p>3、端口部分：跟在域名后就是端口号，如 localhost:8080 这里8080就是端口号，在一条 URL 中、端口号并不是必须存在的，如果省略了该部分，将采用默认端口（80）。</p>
+<p>4、虚拟目录部分：从域名后的第一个“/”开始到最后一个“/”为止，就是虚拟目录部分。虚拟目录也不是 URL必须的部分。这条 URL 的虚拟目录部分为index</p>
+<p>5、文件名部分：从最后一个”/“开始到第一个“?”为止，这一段称为文件名部分，文件名部分也不是必须的部分，如果省略该部分，则使用默认的文件名。这条 URL 的文件名部分为login.html</p>
+<p>6、锚部分：从“#”开始到最后，都是锚部分，这条 URL 锚部分为 more，锚部分也不是 URL 必须的部分。这条 URL 的锚部分为 xxx</p>
+<p>7、参数部分：从“？”开始到“#”为止的部分称为参数部分，又称为搜索部分、查询部分。这条 URL没有参数部分，参数可以允许有多个，参数与参数之间使用&amp;号分隔。这里的参数为name=xnc&amp;ID=123</p>
+<h4 id="六、HTTP与-HTTPS-的区别"><a href="#六、HTTP与-HTTPS-的区别" class="headerlink" title="六、HTTP与 HTTPS 的区别"></a>六、HTTP与 HTTPS 的区别</h4><p>1、HTTP 的 URL 由 http://开头，HTTPS 的 URL 为 https://开头</p>
+<p>2、HTTP 是不安全的，HTTP 是安全的</p>
+<p>3、HTTP 标准的端口是80，HTTPS的标准端口为443</p>
+<p>4、在 OSI 网络模型中，HTTP 工作于应用层，而 HTTPS 的安全传输机制工作在传输层</p>
+<p>5、HTTP无法加密，而 HTTPS 对传输的数据加密</p>
+<p>6、HTTP 无需证书，而 HTTPS 需要 CA 机构wosign 颁发的 SSL 证书</p>
+<h4 id="七、URI与-URL-的区别"><a href="#七、URI与-URL-的区别" class="headerlink" title="七、URI与 URL 的区别"></a>七、URI与 URL 的区别</h4><p><strong>URI分为 URL与 URN</strong> : </p>
+<ul>
+<li><p><strong>URI （uniform resource identifier）统一资源标识符</strong> ，用来标识一个唯一资源。</p>
+<p>Web 上可以用的每一种资源，如图片、视频、文件等都是用 URI 来定位的。URI 分为3部分组成。</p>
+<ul>
+<li>访问资源的命名机制</li>
+<li>存放资源的服务器主机名</li>
+<li>资源自身的名称，由路径表示，着重强调资源。</li>
+</ul>
+</li>
+<li><p><strong>URN（uniform resource name）统一资源命名</strong>，作用就像是一个人的名字，通过名字来命名资源，例如P2P下载中使用的<a href="https://baike.baidu.com/item/%E7%A3%81%E5%8A%9B%E9%93%BE%E6%8E%A5" target="_blank" rel="noopener">磁力链接</a>是URN的一种实现。</p>
+</li>
+<li><p><strong>URL （uniform resource locator）统一资源定位器</strong>，作用就是这个人的所在地址。换句话说，就是URN确定了人的身份，URL 提供找到他的方式。</p>
+</li>
+</ul>
+<h4 id="八、HTTP-请求消息-Request"><a href="#八、HTTP-请求消息-Request" class="headerlink" title="八、HTTP 请求消息 Request"></a>八、HTTP 请求消息 Request</h4><p><img src="//jayedc.github.io/2019/02/15/Http扫盲/request.png" alt="Strategy"></p>
+<p>​                                   <strong>（1-1）</strong></p>
+<p><strong>HTTP 请求报文 request，主要分为四部分。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">这是一个 GET 请求的 request </span><br><span class="line"></span><br><span class="line">GET /img/baidu_85beaf5496f291521eb75ba38eacbd87.svg HTTP/1.1</span><br><span class="line">Host	www.baidu.com</span><br><span class="line">User-Agent	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) </span><br><span class="line">Accept	image/webp,image/apng,image/*,*/*;q=0.8</span><br><span class="line">Referer	https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;tn=baiduhome_pg&amp;wd=hexo&amp;rsv_spt=1&amp;oq=charles%2520%25E6%258A%2593%25E4%25B8%258D%25E5%2588%25B0%2520chrome&amp;rsv_pq=ccdb992d000db3e0&amp;rsv_t=9b5bQCBWubx%2FpxRMcioEI7IewNODmHyUXptp7uCDo1Q7YYih52OCCoU62mzGpPeTfYhw&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_sug3=2&amp;rsv_sug1=1&amp;rsv_sug7=100&amp;bs=charles%20%E6%8A%93%E4%B8%8D%E5%88%B0%20chrome</span><br><span class="line">Accept-Encoding	gzip, deflate, br</span><br><span class="line">Accept-Language	zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br></pre></td></tr></table></figure>
+<p><strong>报文首部 图1-1</strong> </p>
+<p>1、<strong>请求行（request line）</strong>：请求包括请求的类型，要访问的资源URI，HTTP 版本消息 Request URL 说明请求要访问的资源以及所使用的 HTTP 版本。这个 GET 请求中 /img/baidu_85beaf5496f291521eb75ba38eacbd87.svg 为访问的资源，HTTP/1.1则是版本信息。</p>
+<p>2、<strong>请求头部（request header）</strong>： 请求头部，请求行下一条就是请求头部信息，指服务器要使用的附加信息。</p>
+<ul>
+<li>User-Agent :客户端浏览器的类型和版本。</li>
+<li>Accept : 请求的对象类型。如果是“/”表示任意类型，如果是指定的类型，则会变成 “类型/” </li>
+<li>Referer：表示一个来源，告诉服务器是从哪个页面链接请求过来的，服务器可以获得一些信息用于处理。如统计访问人数。</li>
+<li>Accept-Encoding  ：页面编码种类。</li>
+<li>Accept-Language ： 使用的语言种类。</li>
+</ul>
+<p>3、<strong>空行</strong>：请求头部后必须要有空行，无论报文主体有没有内容，必须有空行。</p>
+<p>4、<strong>报文主体</strong>：报文主体也就是请求数据，可以添加任意类型的数据。只有 POST 方法的请求才会有请求实体。这里是 Get 请求所以没有请求实体。</p>
+<p><strong>Post请求例子</strong></p>
+<p><img src="/Users/xnc/Documents/blog/hexoBlog/source/_posts/Http扫盲/post.png" alt="Post"></p>
+<p>​                                    <strong>(1-2)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">红色框中第一行为请求行。</span><br><span class="line">红色框中第二行之后为请求头部。</span><br><span class="line">红色框与蓝色框中间为空行。</span><br><span class="line">蓝色框中为报文主体（请求数据）</span><br></pre></td></tr></table></figure>
+<h4 id="九、HTTP-响应消息-response"><a href="#九、HTTP-响应消息-response" class="headerlink" title="九、HTTP 响应消息 response"></a>九、HTTP 响应消息 response</h4><p><img src="//jayedc.github.io/2019/02/15/Http扫盲/response.png" alt="Strategy"></p>
+<p>​                                    <strong>(1-3)</strong></p>
+<p><strong>响应报文</strong>：当收到 Get 或者 Post 方法发来的请求后，服务器就要对报文进行响应。</p>
+<p><img src="//jayedc.github.io/2019/02/15/Http扫盲/responseInfo.png" alt="Strategy"></p>
+<p>1、<strong>状态行</strong> : 状态行给出了服务器的http版本，以及一个响应代码。响应代码是服务器根据请求进行查找后得到的结果的一种反馈，共有5大类。分别以1、2、3、4、5开头。</p>
+<p>2、<strong>消息报头</strong>：附带的消息</p>
+<ul>
+<li><p>Accept-Ranges : 用于告知客户端服务器是否能处理范围请求,以指定获取服务器端某个部分的资源,可指定的字段值有两种,可处理范围请求时指定其为bytes,反之则指定其为none.</p>
+</li>
+<li><p><a href="https://www.baidu.com/s?wd=Cache-Control&amp;tn=24004469_oem_dg&amp;rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">Cache-Control </a>: 响应<strong>过期时间</strong> , </p>
+</li>
+<li><p>Content-Length : 服务器发送给浏览器数据的长度。</p>
+</li>
+<li>Content-Type : 服务器发送给浏览器数据类型。</li>
+<li><p>Date : 生成响应的日期和时间。</p>
+</li>
+<li><p>Etag : 用来帮助服务器控制Web端的缓存验证。</p>
+</li>
+<li>Expires:  响应<strong>过期时间</strong>。</li>
+<li>Last-Modified: 服务器资源最后修改时间。</li>
+<li>Server：服务器类型。</li>
+<li>Connection：服务器和浏览器连接状态。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">状态码</span><br><span class="line">1**	信息，服务器收到请求，需要请求者继续执行操作</span><br><span class="line">2**	成功，操作被成功接收并处理</span><br><span class="line">3**	重定向，需要进一步的操作以完成请求</span><br><span class="line">4**	客户端错误，请求包含语法错误或无法完成请求</span><br><span class="line">5**	服务器错误，服务器在处理请求的过程中发生了错误</span><br></pre></td></tr></table></figure>
+<h4 id="GET请求与POST请求的区别"><a href="#GET请求与POST请求的区别" class="headerlink" title="GET请求与POST请求的区别"></a>GET请求与POST请求的区别</h4><p><strong>1、先从表面上去别 GET请求 与 POST请求的区别：</strong></p>
+<p>GET请求是从服务器中获取数据，Post则是向服务器传送数据，说到这提一下剩余两种请求，分别是 delete 和 put ，这四个请求方式，分别对应了对服务器的 CRUD 操作，但是现在已经不这样区分了。但是他们的本质都是发送请求和接收结果，知识在格式和数据量上有差别。</p>
+<p>从格式上差别文章前面已经有详细的信息，这里就不在赘述了，主要说数据的差别吧：</p>
+<ul>
+<li><p><strong>GET</strong> 把请求的数据放在 URL 上，数据若果是英文字母或是数字，则原样发送，若是中文或其他字符，则吧字符串用 BASE64加密，也就是 “ % ” 加上字符串的16进制ASCll码。</p>
+</li>
+<li><p><strong>Post</strong> 请求把数据放在 HTTP 的包体内（也就是消息主体中）</p>
+</li>
+<li><p><strong>GET</strong> 请求提交的数据最大是2k，原则上 URL的长度是不做限制的，但是由于大多数浏览器都会限制 URL 的长度在 2k 个字节，即使大多数服务器最大能处理64k大小的 URL，浏览器也依然限制URL为2k。（ IE对URL长度的限制是2083字节(2K+35)。对于其他浏览器，如<a href="https://www.baidu.com/s?wd=Netscape&amp;tn=24004469_oem_dg&amp;rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">Netscape</a>、<a href="https://www.baidu.com/s?wd=FireFox&amp;tn=24004469_oem_dg&amp;rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">FireFox</a>等，理论上没有长度限制，其限制取决于操作系统的支持。）</p>
+<p><strong>总结为一句话：对使用GET方法提交数据时，在IE环境下，需要考虑URL长度2083字节的限制</strong></p>
+</li>
+<li><p><strong>Post</strong> 请求提交数据理论上是没有大小限制的，在 HTTP 协议规范也没有限制大小，但是实际上 IIS4中最大量为80KB，IIS5中为100KB，IIS 6.0默认ASP POST数据量最大为200KB，每个表单域限制是100KB。IIS 6.0默认上传文件的最大大小是4MB。IIS 6.0默认最大请求头是16KB。IIS 6.0之前是没有这些限制。</p>
+</li>
+<li><p><strong>GET </strong>请求只产生一个 TCP 数据包，浏览器会把 HTTP Header 和 data 一起发送给服务器。</p>
+</li>
+<li><p><strong>Post</strong> 请求则先把 HTTP Header 发送出去，等待服务器响应返回 100 continue，浏览器再发送 data。需要发送两个 TCP 数据包</p>
+</li>
+<li><p><strong>GET</strong> 请求在浏览器回退时时无害的，<strong>Post</strong> 在回退会再次提交请求</p>
+</li>
+<li><p><strong>GET</strong> 请求产生的 URL 是可以被Bookmark（书签），<strong>Post</strong> 不可以</p>
+</li>
+<li><p><strong>GET</strong> 请求会被浏览器主动cache（缓存），而 <strong>Post</strong> 请求不会，除非手动设置</p>
+</li>
+<li><p><strong>GET</strong> 请求只能进行 URL 编码，而 <strong>Post</strong> 请求支持多种编码格式，常见的有编码格式：</p>
+<p> 1.<strong>application/x-www-form-urlencoded</strong> （浏览器原生的 form 表单，并且不设置enctype属性，就是此类型）</p>
+<p>2.<strong>multipart/form-data</strong>（我们使用表单上传文件时，必须让 form 的 enctype 等于这个值。这种方式一般用来上传文件，各大服务端语言对它也有着良好的支持。这两种 POST 数据的方式，都是浏览器原生支持的。）</p>
+<p>3.<strong>application/json</strong> （大概很多人都用过这个类型作为响应头的类型，但是现在也越来越多人使用它作为请求头，用来告诉服务器端消息主体是序列化后的 JSON 字符串，由于现在 JSON越来越多人使用，除了低版本的 IE 之外，大多数浏览器都支持 JSON.stringify，服务端也都有处理 JSON 的函数，使用 JSON 作为请求头参数也是不错的选择。）</p>
+<p>4.<strong>text/xml</strong> （这是一种使用 HTTP 作为传输协议，XML 作为编码方式的远程调用规范,它的使用也很广泛，能很好的支持已有的 XML-RPC 服务。不过，XML 结构还是过于臃肿，一般场景使用 JSON 会更加方便）</p>
+<ul>
+<li><p>我们应该使用哪一种编码格式呢？</p>
+<p>1、和后端约定好提交的方式</p>
+<p>2、看提交的数据类型，如果是提交文件格式这要使用 multipart/form-data</p>
+</li>
+</ul>
+</li>
+<li><p><strong>GET</strong> 请求参数会被完整的保留在浏览器历史记录中，<strong>Post</strong> 不会</p>
+</li>
+<li><p><strong>GET</strong> 只接受 ASCll 字符类型的参数，<strong>Post</strong> 没有限制。</p>
+</li>
+</ul>
+<p><strong>总结为一句话： Post 啥都好，但是 GET 效率高。</strong></p>
+<p><strong>2、从安全性上看区别</strong></p>
+<p><strong>根据 HTTP 规范，GET 是用于信息获取，而且应该是安全的和幂等的。</strong></p>
+<p>1、安全的意思是，只用于获取信息，而不会修改信息，仅此而已。就像数据库的查询语句一样。</p>
+<p>2、幂等性的意思是，在GET 请求返回的数据上，引用别人文章的例子：新闻站点的头条一直在更新，虽然每次请求都是不一样的数据，但是该操作它是幂等的，应为他总是返回当前的头条新闻。通俗讲就是：<strong>幂等的意味着对同一URL的多个请求应该返回同样的结果、从自身的角度来看没有改变资源，这就是幂等的</strong></p>
+<p><strong>根据 HTTP 规范，Post 是可能修改服务器资源的请求。</strong></p>
+<blockquote>
+<p> 以上就是本篇文章的全部内容了。写了有几天吧，在查阅了很多资料后终于写完了，整篇文章写了很多 HTTP 常用的知识点，之前对 HTTP 的概念不是很清晰，在写完这篇文章后也对HTTP 有了一个清晰的认知。最后感谢您的观看 thanks。</p>
+</blockquote>
+<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><p>参考一：<a href="https://www.cnblogs.com/ranyonsue/p/5984001.html" target="_blank" rel="noopener">关于 HTTP 协议，一篇就够了</a></p>
+<p>参考二：<a href="https://www.cnblogs.com/hyddd/archive/2009/03/31/1426026.html" target="_blank" rel="noopener">浅谈HTTP中Get与Post的区别</a></p>
+<p>参考三：<a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="noopener">四种常见的 POST 提交数据方式</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/29/MySql/" rel="next" title="MySql-垂直拆分、水平拆分">
+                <i class="fa fa-chevron-left"></i> MySql-垂直拆分、水平拆分
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/19/状态码/" rel="prev" title="状态码">
+                状态码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/edc.jpg" alt="Blog">
+            
+              <p class="site-author-name" itemprop="name">Blog</p>
+              <p class="site-description motion-element" itemprop="description">Just be yourself</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-协议知识学习"><span class="nav-number">1.</span> <span class="nav-text">HTTP 协议知识学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、HTTP基本概念说明"><span class="nav-number">1.1.</span> <span class="nav-text">一、HTTP基本概念说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、HTTP-发展历史"><span class="nav-number">1.2.</span> <span class="nav-text">二、HTTP 发展历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、HTTP-工作原理"><span class="nav-number">1.3.</span> <span class="nav-text">三、HTTP 工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、HTTP的三大特性"><span class="nav-number">1.4.</span> <span class="nav-text">四、HTTP的三大特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、HTTP-URL详细介绍"><span class="nav-number">1.5.</span> <span class="nav-text">五、HTTP URL详细介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六、HTTP与-HTTPS-的区别"><span class="nav-number">1.6.</span> <span class="nav-text">六、HTTP与 HTTPS 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#七、URI与-URL-的区别"><span class="nav-number">1.7.</span> <span class="nav-text">七、URI与 URL 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#八、HTTP-请求消息-Request"><span class="nav-number">1.8.</span> <span class="nav-text">八、HTTP 请求消息 Request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#九、HTTP-响应消息-response"><span class="nav-number">1.9.</span> <span class="nav-text">九、HTTP 响应消息 response</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GET请求与POST请求的区别"><span class="nav-number">1.10.</span> <span class="nav-text">GET请求与POST请求的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">1.11.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Blog</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log(`Failed to save Visitor num, with error message: ${responseJSON.error}`);
+              })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! More info at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'HovF01HbpzpFQgg5g89W9wNC-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'HovF01HbpzpFQgg5g89W9wNC-gzGzoHsz',
+                'X-LC-Key': 'YCW3blEeAzU6T9dhxsbcdnzF',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
